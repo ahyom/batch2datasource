@@ -1,4 +1,4 @@
-package br.com.soave.batch.domain;
+package br.com.soave.batch.domain.model;
 
 public class Products {
 
