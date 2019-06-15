@@ -8,6 +8,17 @@ public class Products {
     private Double salePriceProduct;
     private String barCodeProduct;
 
+    public Products(Integer productId, String productName, Double costPriceProduct, Double salePriceProduct, String barCodeProduct) {
+        this.productId = productId;
+        this.productName = productName;
+        this.costPriceProduct = costPriceProduct;
+        this.salePriceProduct = salePriceProduct;
+        this.barCodeProduct = barCodeProduct;
+    }
+
+    public Products() {
+    }
+
     public Integer getProductId() {
         return productId;
     }
