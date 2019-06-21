@@ -21,10 +21,7 @@ public class ProductProcessor implements ItemProcessor<Products, Products> {
 
     @Override
     public Products process(Products item) throws Exception {
-        log.info("Recalculating product " + item.getProductId());
-        log.info("Old SalePrice: $" + item.getSalePriceProduct());
         final Double newSalePriceProduct = item.getCostPriceProduct() + (item.getCostPriceProduct() * 0.85);
-        log.info("New SalePrice: $" + newSalePriceProduct);
         final Products transformedProduct = new Products(item.getProductId(),
                                                          item.getProductName().toUpperCase(),
                                                          item.getCostPriceProduct(),
