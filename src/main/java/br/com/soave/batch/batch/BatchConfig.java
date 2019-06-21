@@ -17,6 +17,7 @@ import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourc
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -33,6 +34,14 @@ import javax.sql.DataSource;
 @Configuration
 @EnableBatchProcessing
 public class BatchConfig {
+
+    @Autowired
+    @Qualifier("mysqldatasource")
+    private DataSource mySqlDataSource;
+
+    @Autowired
+    @Qualifier("postgreDataSource")
+    private DataSource postgreDataSource;
 
     @Bean
     public Job job(JobBuilderFactory jobBuilderFactory,
@@ -53,9 +62,9 @@ public class BatchConfig {
     }
 
     @Bean
-    ItemReader<Products> itemReader(DataSource dataSource){
+    ItemReader<Products> itemReader(){
         JdbcCursorItemReader<Products> dataBaseReader = new JdbcCursorItemReader<>();
-        dataBaseReader.setDataSource(dataSource);
+        dataBaseReader.setDataSource(this.mySqlDataSource);
         dataBaseReader.setSql(MySQLQuery.readProductsFromMySQL());
         dataBaseReader.setRowMapper(new ProductRowMapper());
         return dataBaseReader;
@@ -71,10 +80,7 @@ public class BatchConfig {
         JdbcBatchItemWriter<Products> writer = new JdbcBatchItemWriter<>();
         writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<Products>());
         writer.setSql(PostgreSQLQuery.writeProductsPostgreSQL());
-        writer.setDataSource(null);
+        writer.setDataSource(postgreDataSource);
         return writer;
     }
-
-
-
 }
