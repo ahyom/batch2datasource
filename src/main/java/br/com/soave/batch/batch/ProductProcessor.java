@@ -1,8 +1,6 @@
 package br.com.soave.batch.batch;
 
 import br.com.soave.batch.domain.model.Products;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemProcessor;
 
 
@@ -16,8 +14,6 @@ public class ProductProcessor implements ItemProcessor<Products, Products> {
      * @author Arthur Soave
      * @since 06/2019
      */
-
-    private static final Logger log = LoggerFactory.getLogger(ProductProcessor.class);
 
     @Override
     public Products process(Products item) throws Exception {
